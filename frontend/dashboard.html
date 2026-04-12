@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <div class="dash-page">
+
+        <!-- HEADER -->
+        <div class="dash-header">
+            <h1>Feedback Dashboard</h1>
+            <a href="index.html">Back to Form</a>
+        </div>
+
+        <!-- SUMMARY STATS -->
+        <div class="section-label">Summary Stats</div>
+        <div class="stats-row">
+            <div class="stat-box">
+                <span class="stat-num total" id="total-count">0</span>
+                <span class="stat-lbl">Total Feedback</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-num pos" id="positive-count">0</span>
+                <span class="stat-lbl">Positive</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-num neg" id="negative-count">0</span>
+                <span class="stat-lbl">Negative</span>
+            </div>
+        </div>
+
+        <!-- CHARTS -->
+        <div class="section-label">Charts</div>
+        <div class="charts-row">
+            <div class="chart-box">
+                <p class="chart-title">Sentiment distribution (pie)</p>
+                <canvas id="pieChart"></canvas>
+            </div>
+            <div class="chart-box">
+                <p class="chart-title">Feedback by category (bar)</p>
+                <canvas id="barChart"></canvas>
+            </div>
+        </div>
+
+        <!-- FEEDBACK TABLE -->
+        <div class="section-label">All Feedback Entries</div>
+        <div class="table-box">
+            <table id="feedback-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Feedback</th>
+                        <th>Category</th>
+                        <th>Sentiment</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script src="dashboard.js"></script>
+
+</body>
+</html>

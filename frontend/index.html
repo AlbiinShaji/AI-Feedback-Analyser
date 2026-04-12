@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Analyzer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ========== HEADER ========== -->
+    <header>
+        <h1>Feedback Analyzer</h1>
+        <p>Share your experience with us</p>
+        <a href="dashboard.html">View Dashboard</a>
+    </header>
+
+    <!-- ========== MAIN FORM CARD ========== -->
+    <main>
+        <div class="form-card">
+
+            <h2>Submit Your Feedback</h2>
+
+            <!-- Name Field -->
+            <div class="form-group">
+                <label for="name">Your Name (optional)</label>
+                <input type="text" id="name" placeholder="e.g. John">
+            </div>
+
+            <!-- Category Field -->
+            <div class="form-group">
+                <label for="category">Feedback Category</label>
+                <select id="category">
+                    <option value="Product">Product</option>
+                    <option value="Service">Service</option>
+                    <option value="General">General</option>
+                </select>
+            </div>
+
+            <!-- Feedback Text Field -->
+            <div class="form-group">
+                <label for="feedback_text">Your Feedback</label>
+                <textarea
+                    id="feedback_text"
+                    placeholder="Write your feedback here..."
+                    rows="5">
+                </textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <button id="submit-btn">Submit Feedback</button>
+
+            <!-- Result Box (hidden until feedback is submitted) -->
+            <div id="result-box" class="result-box hidden">
+                <p id="result-message"></p>
+                <p id="sentiment-label"></p>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

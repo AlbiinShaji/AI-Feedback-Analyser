@@ -2,6 +2,8 @@ const API_URL = "http://127.0.0.1:5000";
 
 let pieChart = null;
 let barChart = null;
+let currentEntries = []; // Cache to re-render bar chart without refetching
+let currentStats = null;
 
 // Auto-load when page opens
 window.addEventListener("load", function () {
@@ -9,11 +11,31 @@ window.addEventListener("load", function () {
     loadFeedback();
 });
 
+// Listen for theme changes to re-render charts with correct colors
+window.addEventListener("themeChanged", function() {
+    if (currentStats) {
+        drawPieChart(currentStats.Positive || 0, currentStats.Negative || 0, currentStats.Neutral || 0);
+    }
+    if (currentEntries.length > 0) {
+        drawBarChart(currentEntries);
+    }
+});
+
+function getChartColors() {
+    const isDark = document.body.classList.contains('dark-mode');
+    return {
+        textColor: isDark ? '#cbd5e1' : '#475569',
+        gridColor: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+        pieBorder: isDark ? '#1e293b' : '#ffffff'
+    };
+}
+
 // ── Fetch stats → update cards + pie chart ──
 async function loadStats() {
     try {
         const response = await fetch(`${API_URL}/stats`);
         const stats    = await response.json();
+        currentStats = stats;
 
         const positive = stats.Positive || 0;
         const negative = stats.Negative || 0;
@@ -33,6 +55,7 @@ async function loadStats() {
 
 // ── Pie chart ──
 function drawPieChart(positive, negative, neutral) {
+    const colors = getChartColors();
     const ctx = document.getElementById("pieChart").getContext("2d");
     if (pieChart) pieChart.destroy();
 
@@ -42,9 +65,9 @@ function drawPieChart(positive, negative, neutral) {
             labels: ["Positive", "Negative", "Neutral"],
             datasets: [{
                 data: [positive, negative, neutral],
-                backgroundColor: ["#2ecc71", "#e74c3c", "#f39c12"],
-                borderWidth: 2,
-                borderColor: "#fff"
+                backgroundColor: ["#10b981", "#ef4444", "#f59e0b"],
+                borderWidth: 3,
+                borderColor: colors.pieBorder
             }]
         },
         options: {
@@ -53,7 +76,8 @@ function drawPieChart(positive, negative, neutral) {
                 legend: {
                     position: "bottom",
                     labels: {
-                        font: { size: 12 },
+                        color: colors.textColor,
+                        font: { size: 13, family: "'Inter', sans-serif" },
                         padding: 16,
                         usePointStyle: true
                     }
@@ -68,6 +92,7 @@ async function loadFeedback() {
     try {
         const response = await fetch(`${API_URL}/feedback`);
         const entries  = await response.json();
+        currentEntries = entries;
 
         drawBarChart(entries);
         populateTable(entries);
@@ -84,6 +109,7 @@ function drawBarChart(entries) {
         if (counts[e.category] !== undefined) counts[e.category]++;
     });
 
+    const colors = getChartColors();
     const ctx = document.getElementById("barChart").getContext("2d");
     if (barChart) barChart.destroy();
 
@@ -93,7 +119,7 @@ function drawBarChart(entries) {
             labels: ["Product", "Service", "General"],
             datasets: [{
                 data: [counts.Product, counts.Service, counts.General],
-                backgroundColor: ["#3498db", "#9b59b6", "#1abc9c"],
+                backgroundColor: ["#6366f1", "#8b5cf6", "#14b8a6"],
                 borderRadius: 6,
                 borderSkipped: false
             }]
@@ -104,10 +130,11 @@ function drawBarChart(entries) {
             scales: {
                 y: {
                     beginAtZero: true,
-                    ticks: { stepSize: 1 },
-                    grid: { color: "#f0f0f0" }
+                    ticks: { stepSize: 1, color: colors.textColor, font: { family: "'Inter', sans-serif" } },
+                    grid: { color: colors.gridColor }
                 },
                 x: {
+                    ticks: { color: colors.textColor, font: { family: "'Inter', sans-serif" } },
                     grid: { display: false }
                 }
             }
@@ -122,7 +149,7 @@ function populateTable(entries) {
 
     if (entries.length === 0) {
         tbody.innerHTML = `<tr><td colspan="5"
-            style="text-align:center;color:#aaa;padding:24px;">
+            style="text-align:center;color:var(--text-secondary);padding:24px;">
             No feedback yet.</td></tr>`;
         return;
     }

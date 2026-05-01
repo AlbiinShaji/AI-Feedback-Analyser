@@ -4,35 +4,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feedback Analyzer</title>
+    <title>AI Feedback Analyser</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
     <!-- ========== HEADER ========== -->
-    <header>
-        <h1>Feedback Analyzer</h1>
-        <p>Share your experience with us</p>
-        <a href="dashboard.html">View Dashboard</a>
+    <header class="header-container glass-panel">
+        <div class="header-title">
+            <h1>AI Feedback Analyser</h1>
+            <p>Share your experience with us</p>
+        </div>
+        <div class="header-actions">
+            <a href="dashboard.html" class="btn-nav">View Dashboard</a>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+        </div>
     </header>
 
     <!-- ========== MAIN FORM CARD ========== -->
-    <main>
-        <div class="form-card">
+    <main class="container">
+        <div class="form-wrapper glass-panel">
 
             <h2>Submit Your Feedback</h2>
 
             <!-- Name Field -->
             <div class="form-group">
                 <label for="name">Your Name (optional)</label>
-                <input type="text" id="name" placeholder="e.g. John">
+                <input class="form-control" type="text" id="name" placeholder="e.g. John">
             </div>
 
             <!-- Category Field -->
             <div class="form-group">
                 <label for="category">Feedback Category</label>
-                <select id="category">
+                <select class="form-control" id="category">
                     <option value="Product">Product</option>
                     <option value="Service">Service</option>
                     <option value="General">General</option>
@@ -42,7 +47,7 @@
             <!-- Feedback Text Field -->
             <div class="form-group">
                 <label for="feedback_text">Your Feedback</label>
-                <textarea
+                <textarea class="form-control"
                     id="feedback_text"
                     placeholder="Write your feedback here..."
                     rows="5">
@@ -50,10 +55,10 @@
             </div>
 
             <!-- Submit Button -->
-            <button id="submit-btn">Submit Feedback</button>
+            <button id="submit-btn" class="btn-submit">Submit Feedback</button>
 
-            <!-- Result Box (hidden until feedback is submitted) -->
-            <div id="result-box" class="result-box hidden">
+            <!-- Result Box -->
+            <div id="result-box" class="result-box">
                 <p id="result-message"></p>
                 <p id="sentiment-label"></p>
             </div>
@@ -61,6 +66,7 @@
         </div>
     </main>
 
+    <script src="theme.js"></script>
     <script src="script.js"></script>
 
 </body>

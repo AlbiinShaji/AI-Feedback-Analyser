@@ -37,8 +37,7 @@ async function submitFeedback() {
         const resultMsg   = document.getElementById("result-message");
         const sentimentLbl = document.getElementById("sentiment-label");
 
-        resultBox.classList.remove("hidden", "positive", "negative", "neutral");
-        resultBox.classList.add(data.sentiment.toLowerCase());
+        resultBox.className = "result-box show " + data.sentiment.toLowerCase();
 
         resultMsg.textContent    = data.message;
         sentimentLbl.textContent = `Sentiment: ${data.sentiment} (Score: ${data.score})`;

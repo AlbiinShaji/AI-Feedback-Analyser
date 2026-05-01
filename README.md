@@ -100,8 +100,42 @@ python backend/test_sentiment.py
 - Registered User role is planned for future development
 - TextBlob may not accurately classify very short inputs
 
+## System Architecture
+The application follows a client-server architecture:
+- **Frontend (HTML/CSS/JS)**: Sends HTTP requests to the Flask backend. Features a modern glassmorphism UI with dark mode.
+- **Backend (Python/Flask)**: Processes requests, runs sentiment analysis, and saves to the DB.
+- **Database (SQLite)**: Stores all feedback persistently.
+- **Visualization (Chart.js)**: Renders live visualizations from API data.
+
+### Database Schema (feedback)
+| Field         | Type     | Description                        |
+|---------------|----------|------------------------------------|
+| id            | INTEGER  | Auto-generated primary key         |
+| name          | TEXT     | Submitter name or "Guest"          |
+| feedback_text | TEXT     | The feedback message               |
+| category      | TEXT     | Product / Service / General        |
+| sentiment     | TEXT     | Positive / Negative / Neutral      |
+| score         | REAL     | Polarity score (-1.0 to +1.0)      |
+| user_role     | TEXT     | guest / user / admin               |
+| timestamp     | DATETIME | Date and time of submission        |
+
+## Testing
+The application has been thoroughly tested across multiple layers:
+1. **Unit Testing (`backend/test_sentiment.py`)**: Tests TextBlob sentiment analysis logic against boundary cases and empty inputs.
+2. **Integration Testing**: Postman testing of all REST API endpoints (`GET`, `POST`, `DELETE`) to ensure correct HTTP status codes (200, 201, 400).
+3. **UI Testing**: Verification of form validation, dynamic Chart.js rendering, glassmorphism responsiveness across devices, and Dark/Light mode state persistence.
+
+## Challenges and Solutions
+| Challenge                        | Solution                              |
+|----------------------------------|---------------------------------------|
+| CORS error between frontend/backend | Added `flask-cors` to the Flask app |
+| Chart not updating after new data | Used `chart.destroy()` before redraw |
+| Empty name crashing backend      | Added default value "Guest" in Flask |
+| SQLite relative path errors      | Changed `database.py` to use absolute paths based on `__file__` |
+
 ## Future Enhancements
 - Add user login and registration system
 - Export feedback data as CSV
 - Add date range filter on dashboard
 - Deploy to cloud (Heroku / Render)
+- Support for multilingual sentiment analysis

@@ -1,4 +1,4 @@
-# Feedback Sentiment Analyzer
+# AI Feedback Analyser
 
 ## Project Overview
 A full-stack web application that collects user feedback, analyzes
@@ -69,6 +69,10 @@ or visit: `http://127.0.0.1:5500/frontend/index.html`
 python backend/test_sentiment.py
 
 ## Features
+- **Modern Glassmorphism UI**: Beautiful semi-transparent containers with blurred backdrops.
+- **Dark/Light Mode Toggle**: Dynamic theme switching with persistent local storage.
+- **Responsive Layout**: Fluid CSS Grid and Flexbox layouts for mobile and desktop.
+- **Dynamic Charting**: Chart.js graphs that automatically adapt colors to the current theme.
 - Responsive feedback form with name, category, and message fields
 - Real-time sentiment result shown after submission
 - Colour-coded result box (green / red / yellow)
